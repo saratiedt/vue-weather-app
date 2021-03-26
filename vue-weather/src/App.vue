@@ -2,7 +2,13 @@
   <div>
     <main>
       <div class="search-box">
-        <input type="text" class="search-bar" placeholder="Pesquisar..." />
+        <input
+          type="text"
+          class="search-bar"
+          placeholder="Pesquisar..."
+          v-model="query"
+          @keypress="fetchWeather"
+        />
       </div>
 
       <div class="weather-wrap">
@@ -25,7 +31,17 @@ export default {
   data() {
     return {
       api_key: "a3fd0851b6316cb2892e983085bfb015",
+      url_barse: "http://api.openweathermap.org/data/2.5",
+      query: "",
+      weather: {},
     };
+  },
+  methods: {
+    fetchWeather(tecla) {
+      if (tecla.key == "Enter") {
+        fetch(`${this.api_base}weather?q=`)
+      }
+    },
   },
 };
 </script>
