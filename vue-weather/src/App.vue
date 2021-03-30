@@ -33,7 +33,7 @@
 </template>
 
 <script>
-  const moment = require('moment');
+const moment = require("moment");
 export default {
   name: "App",
   data() {
@@ -61,8 +61,8 @@ export default {
     },
 
     dateBuilder() {
-      moment.locale('pt-br');
-      return moment().format('LLLL');
+      moment.locale("pt-br");
+      return moment().format("LLLL");
     },
   },
 };
