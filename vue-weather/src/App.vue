@@ -33,6 +33,7 @@
 </template>
 
 <script>
+  const moment = require('moment');
 export default {
   name: "App",
   data() {
@@ -60,37 +61,8 @@ export default {
     },
 
     dateBuilder() {
-      let d = new Date();
-      let meses = [
-        "Janeiro",
-        "Fevereiro",
-        "Março",
-        "Abril",
-        "Maio",
-        "Junho",
-        "julho",
-        "Agosto",
-        "Setembro",
-        "Outubro",
-        "Novembro",
-        "Dezembro",
-      ];
-      let dias = [
-        "Domingo",
-        "Segunda",
-        "Terça-feira",
-        "Quarta-feira",
-        "Quinta-feira",
-        "Sexta-feira",
-        "Sábado",
-      ];
-
-      let diasSelecionado = dias[d.getDay()];
-      let data = d.getDate();
-      let mes = meses[d.getMonth()];
-      let ano = d.getFullYear();
-
-      return `${diasSelecionado} ${data} ${mes} ${ano}`;
+      moment.locale('pt-br');
+      return moment().format('LLLL');
     },
   },
 };
