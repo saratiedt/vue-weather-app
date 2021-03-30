@@ -1,5 +1,10 @@
 <template>
-  <div>
+  <div
+    id="app"
+    :class="
+      typeof weather.main != 'undefined' && weather.main.temp > 16 ? 'warm' : ''
+    "
+  >
     <main>
       <div class="search-box">
         <input
@@ -11,14 +16,16 @@
         />
       </div>
 
-      <div class="weather-wrap">
+      <div class="weather-wrap" v-if="typeof weather.main != 'undefined'">
         <div class="location-box">
-          <div class="location">Blumenau, Brasil</div>
-          <div class="date">Quarta feira 26 maio, 2021</div>
+          <div class="location">
+            {{ weather.name }}, {{ weather.sys.country }}
+          </div>
+          <div class="date">{{ dateBuilder() }}</div>
         </div>
         <div class="weather-box">
-          <div class="temp">15°c</div>
-          <div class="weather">Chuva</div>
+          <div class="temp">{{ Math.round(weather.main.temp) }}</div>
+          <div class="weather">{{ weather.weather[0].main }}</div>
         </div>
       </div>
     </main>
@@ -31,7 +38,7 @@ export default {
   data() {
     return {
       api_key: "a3fd0851b6316cb2892e983085bfb015",
-      url_barse: "http://api.openweathermap.org/data/2.5",
+      url_base: "https://api.openweathermap.org/data/2.5/",
       query: "",
       weather: {},
     };
@@ -39,110 +46,56 @@ export default {
   methods: {
     fetchWeather(tecla) {
       if (tecla.key == "Enter") {
-        fetch(`${this.api_base}weather?q=`)
+        fetch(
+          `${this.url_base}weather?q=${this.query}&units=metric&APPID=${this.api_key}`
+        )
+          .then((res) => {
+            return res.json();
+          })
+          .then(this.setResults);
       }
+    },
+    setResults(results) {
+      this.weather = results;
+    },
+
+    dateBuilder() {
+      let d = new Date();
+      let meses = [
+        "Janeiro",
+        "Fevereiro",
+        "Março",
+        "Abril",
+        "Maio",
+        "Junho",
+        "julho",
+        "Agosto",
+        "Setembro",
+        "Outubro",
+        "Novembro",
+        "Dezembro",
+      ];
+      let dias = [
+        "Domingo",
+        "Segunda",
+        "Terça-feira",
+        "Quarta-feira",
+        "Quinta-feira",
+        "Sexta-feira",
+        "Sábado",
+      ];
+
+      let diasSelecionado = dias[d.getDay()];
+      let data = d.getDate();
+      let mes = meses[d.getMonth()];
+      let ano = d.getFullYear();
+
+      return `${diasSelecionado} ${data} ${mes} ${ano}`;
     },
   },
 };
 </script>
 
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
 
-body {
-  font-family: "montserrat", sans-serif;
-}
-
-#app {
-  background-image: url("./assets/cold-bg.jpg");
-  background-size: cover;
-  background-position: bottom;
-  transition: 0.4s;
-}
-
-main {
-  min-height: 100vh;
-  padding: 25px;
-  background-image: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.25),
-    rgba(0, 0, 0, 0.75)
-  );
-}
-
-.search-box {
-  width: 100%;
-  margin-bottom: 30px;
-}
-
-.search-box .search-bar {
-  display: block;
-  width: 100%;
-  padding: 15px;
-
-  color: #313131;
-  font-size: 20px;
-  appearance: none;
-  border: none;
-  outline: none;
-  background: none;
-
-  box-shadow: 0px 0px 8pc rgba(0, 0, 0, 0.25);
-  background-color: rgba(255, 255, 255, 0.5);
-  border-radius: 0px 16px 0px 16px;
-  transition: 0.4s;
-}
-
-.search-box .search-bar:focus {
-  box-shadow: 0px 0px 8pc rgba(0, 0, 0, 0.25);
-  background-color: rgba(255, 255, 255, 0.75);
-  border-radius: 16px 0px 16px 0px;
-}
-
-.location-box .location {
-  color: white;
-  font-size: 32px;
-  font-weight: 500;
-  text-align: center;
-  text-shadow: 1px 3px rgba(0, 0, 0, 0.05);
-}
-
-.location-box .date {
-  color: white;
-  font-size: 20;
-  font-weight: 300;
-  font-style: italic;
-  text-align: center;
-}
-
-.weather-box {
-  text-align: center;
-}
-
-.weather-box .temp {
-  display: inline-block;
-  padding: 10px 25px;
-  color: white;
-  font-size: 102px;
-  font-weight: 900;
-
-  text-shadow: 3px 6px rgba(0, 0, 0, 0.05);
-  background-color: rgba(255, 255, 255, 0.25);
-  border-radius: 16px;
-  margin: 30px 0px;
-
-  box-shadow: 3px 6px rgba(0, 0, 0, 0.05);
-}
-
-.weather-box .weather {
-  color: white;
-  font-size: 48px;
-  font-weight: 700;
-  font-style: italic;
-  text-shadow: 3px 6px rgba(0, 0, 0, 0.05);
-}
 </style>
