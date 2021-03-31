@@ -60,6 +60,7 @@ export default {
       this.weather = results;
     },
 
+
     dateBuilder() {
       moment.locale("pt-br");
       return moment().format("LLLL");
