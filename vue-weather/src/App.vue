@@ -60,10 +60,20 @@ export default {
       this.weather = results;
     },
 
-
     dateBuilder() {
       moment.locale("pt-br");
       return moment().format("LLLL");
+    },
+
+    setBackground(weather) {
+      if (weather.main !== "undefined") {
+        if (weather.main.temp > 16) {
+          return "warm";
+        } else {
+          return "";
+        }
+      }
+      return "";
     },
   },
 };
