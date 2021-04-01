@@ -1,10 +1,5 @@
 <template>
-  <div
-    id="app"
-    :class="
-      setBackground(weather)
-    "
-  >
+  <div id="app" :class="setBackground(weather)">
     <main>
       <div class="search-box">
         <input
@@ -66,9 +61,12 @@ export default {
     },
 
     setBackground(weather) {
+      const horaAtual = moment().hour();
       if (weather.main) {
-        if (weather.main.temp > 16) {
+        if (weather.main.temp > 16 && horaAtual < 18) {
           return "warm";
+        } else if (weather.main.temp > 16 && horaAtual > 18) {
+          return "warm-night";
         } else {
           return "";
         }

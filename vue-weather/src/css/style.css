@@ -19,6 +19,10 @@ body {
   background-image: url("../assets/hot.png");
 }
 
+#app.warm-night {
+  background-image: url("../assets/summer-night.png");
+}
+
 main {
   min-height: 100vh;
   padding: 25px;
