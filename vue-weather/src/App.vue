@@ -67,6 +67,8 @@ export default {
           return "warm";
         } else if (weather.main.temp > 16 && horaAtual > 18) {
           return "warm-night";
+        } else if (weather.main.temp < 16 && horaAtual > 18) {
+          return "cold-night";
         } else {
           return "";
         }

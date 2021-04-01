@@ -23,6 +23,10 @@ body {
   background-image: url("../assets/summer-night.png");
 }
 
+#app.cold-night {
+  background-image: url("../assets/winter-night.png");
+}
+
 main {
   min-height: 100vh;
   padding: 25px;
