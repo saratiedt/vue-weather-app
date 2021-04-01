@@ -2,7 +2,7 @@
   <div
     id="app"
     :class="
-      typeof weather.main != 'undefined' && weather.main.temp > 16 ? 'warm' : ''
+      setBackground(weather)
     "
   >
     <main>
@@ -66,7 +66,7 @@ export default {
     },
 
     setBackground(weather) {
-      if (weather.main !== "undefined") {
+      if (weather.main) {
         if (weather.main.temp > 16) {
           return "warm";
         } else {
